@@ -13,24 +13,20 @@ if($conn->connect_error)
 else
     echo" connected <br>";
 
-$query1 = "create procedure if not exists addRecipe(RecipeName varchar(250), Ingredient varchar(250), Quantity integer) ".
+$query1 = "create procedure if not exists addIngredient(Ingredient varchar(250), Quantity integer) ".
          "begin".
-         "  insert into Recipes values(RecipeName,Ingredient,Quantity);".
+         "  insert into Inventory values(Ingredient,Quantity);".
          "end";
 
 if(! $conn->query($query1))
     die("Error creating procedure: " . $conn->error );
 
-$stmt = $conn->prepare("call addRecipe(?,?,?)");
-$stmt->bind_param("ssi", $RecipeName, $Ingredient, $Quantity);
+$stmt = $conn->prepare("call addIngredient(?,?)");
+$stmt->bind_param("si", $Ingredient, $Quantity);
 
-$RecipeName = $_POST["RecipeName"];
 $Ingredient = $_POST["Ingredient"];
 $Quantity = $_POST["Quantity"];
 $stmt->execute();
 
 $conn->close();
-
-header("Location: //127.0.0.1/createRecipeAndAddIngredient.html");
-exit();
 ?>
