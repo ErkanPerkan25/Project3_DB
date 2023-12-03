@@ -21,20 +21,22 @@ else
 
 // create table if not exits
 $queryString = "create table if not exists Recipes".
-          " (RecipeName varchar(250), Ingredient varchar(250), Quantity integer)";
+          " (RecipeName varchar(250), Ingredient varchar(250), Quantity integer,".
+          " Primary key (RecipeName, Ingredient));";
 
 $query2 = "create table if not exists Inventory".
-          " (Ingredient varchar(250), Quantity integer)";
-
-if(! $conn->query($queryString))
-    die("Error creating table: " . $conn->error );
+          " (Ingredient varchar(250), Quantity integer,".
+          " Primary Key (Ingredient));";
 
 if(! $conn->query($query2))
     die("Error creating table: " . $conn->error );
 
+if(! $conn->query($queryString))
+    die("Error creating table: " . $conn->error );
+
 $conn->close();
 
-header("Location: //127.0.0.1/mainPage.html");
+header("Location: mainPage.html");
 exit();
 
 ?>

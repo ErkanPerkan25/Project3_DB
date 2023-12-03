@@ -10,8 +10,6 @@ $conn = new mysqli($host, $user, $password, $dbName);
 
 if($conn->connect_error)
     die("Could not connect: ".mysqli_connect_error());
-else
-    echo" connected <br>";
 
 $query = "create procedure if not exists listRecipeIngredients(Recipe varchar(250)) ".
          "begin".
@@ -28,6 +26,8 @@ $Recipe = $_POST["RecipeName"];
 $stmt->execute();
 
 $stmt->bind_result($iName, $Quantity);
+
+echo "Ingredients for ".$Recipe;
 
 echo "<table border=1>";
 echo "<tr><th>Ingredient</th><th>Quantity</th></tr>";

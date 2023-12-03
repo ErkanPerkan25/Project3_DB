@@ -15,7 +15,8 @@ else
 
 $query1 = "create procedure if not exists addIngredient(Ingredient varchar(250), Quantity integer) ".
          "begin".
-         "  insert into Inventory values(Ingredient,Quantity);".
+         "  insert into Inventory values(Ingredient,Quantity)".
+         "on duplicate key update Inventory.Quantity = Inventory.Quantity + Quantity;".
          "end";
 
 if(! $conn->query($query1))
@@ -29,4 +30,8 @@ $Quantity = $_POST["Quantity"];
 $stmt->execute();
 
 $conn->close();
+header("Location: addIngredientToStore.html");
+
+exit();
+
 ?>

@@ -15,7 +15,7 @@ else
 
 $query = "create procedure if not exists buyIngredients(Recipe varchar(250)) ".
          "begin".
-         "  update Inventory set Inventory.Quantity = Quantity - Recipes.Quantity where Recipes.RecipeName = Recipe;".
+         " update Inventory set Inventory.Quantity = Inventory.Quantity - 1 where Inventory.Ingredient = Recipes.Ingredient;".
          "end";
 
 if(! $conn->query($query))
@@ -26,8 +26,6 @@ $stmt->bind_param("s", $RecipeName);
 
 $Recipe = $_POST["RecipeName"];
 $stmt->execute();
-
-$stmt->bind_result($iName, $Quantity);
 
 echo "<a href='mainPage.html'>Press here to go back to the main page</a>";
 
